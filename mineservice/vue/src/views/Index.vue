@@ -5,6 +5,7 @@
       <sp-bank-balances />
       <sp-token-send />
       <!-- this line is used by starport scaffolding # 4 -->
+		<sp-type-form type="mine" :fields="['name', 'price', 'owner', 'selling', 'efficiency', 'invetory', 'resources', 'uraniumCost', ]" module="mineservice" />
     </div>
   </div>
 </template>
