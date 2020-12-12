@@ -8,6 +8,7 @@ import (
 func RegisterCodec(cdc *codec.Codec) {
   // this line is used by starport scaffolding # 1
 		cdc.RegisterConcrete(MsgCreateMine{}, "mineservice/CreateMine", nil)
+		cdc.RegisterConcrete(MsgBuyMine{}, "mineservice/BuyMine", nil)
 		cdc.RegisterConcrete(MsgSetMine{}, "mineservice/SetMine", nil)
 		cdc.RegisterConcrete(MsgDeleteMine{}, "mineservice/DeleteMine", nil)
 }

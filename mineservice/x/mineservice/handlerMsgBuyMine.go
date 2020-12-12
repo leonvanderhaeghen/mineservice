@@ -24,6 +24,7 @@ func handleMsgBuyMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgBuyMine) (*
 		}
 	}	
 	k.SetOwner(ctx,msg.ID,msg.Buyer)
+	k.SetSelling(ctx,msg.ID,false)
 	k.SetPrice(ctx,msg.ID,msg.Bid)
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
 }

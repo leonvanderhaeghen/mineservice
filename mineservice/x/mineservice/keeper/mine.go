@@ -111,3 +111,8 @@ func (k Keeper) SetOwner(ctx sdk.Context,key string,owner sdk.AccAddress){
 	mine.Owner = owner
 	k.SetMine(ctx,mine)
 }
+func(k Keeper) SetSelling(ctx sdk.Context,key string,selling bool){
+	mine,_ := k.GetMine(ctx,key)
+	mine.Selling = selling
+	k.SetMine(ctx,mine)
+}

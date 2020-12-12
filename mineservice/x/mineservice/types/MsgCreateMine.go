@@ -10,7 +10,6 @@ var _ sdk.Msg = &MsgCreateMine{}
 
 type MsgCreateMine struct {
   ID      string
-  Creator sdk.AccAddress `json:"creator" yaml:"creator"`
   Name string `json:"name" yaml:"name"`
   Price sdk.Coins `json:"price" yaml:"price"`
   Owner sdk.AccAddress `json:"owner" yaml:"owner"`
@@ -22,10 +21,9 @@ type MsgCreateMine struct {
   ResourceCounter int `json:"ResourceCounter" yaml:"ResourceCounter"`
 }
 
-func NewMsgCreateMine(creator sdk.AccAddress, name string, price sdk.Coins, owner sdk.AccAddress, selling bool, efficiency int, invetory string, resources []string, uraniumCost int) MsgCreateMine {
+func NewMsgCreateMine(owner sdk.AccAddress, name string, price sdk.Coins, selling bool, efficiency int, invetory string, resources []string, uraniumCost int) MsgCreateMine {
   return MsgCreateMine{
     ID: uuid.New().String(),
-	Creator: creator,
     Name: name,
     Price: price,
     Owner: owner,
@@ -46,7 +44,7 @@ func (msg MsgCreateMine) Type() string {
 }
 
 func (msg MsgCreateMine) GetSigners() []sdk.AccAddress {
-  return []sdk.AccAddress{sdk.AccAddress(msg.Creator)}
+  return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
 }
 
 func (msg MsgCreateMine) GetSignBytes() []byte {
@@ -55,7 +53,7 @@ func (msg MsgCreateMine) GetSignBytes() []byte {
 }
 
 func (msg MsgCreateMine) ValidateBasic() error {
-  if msg.Creator.Empty() {
+  if msg.Owner.Empty() {
     return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "creator can't be empty")
   }
   return nil
