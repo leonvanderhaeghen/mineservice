@@ -9,13 +9,13 @@ var _ sdk.Msg = &MsgDeleteMine{}
 
 type MsgDeleteMine struct {
   ID      string         `json:"id" yaml:"id"`
-  Creator sdk.AccAddress `json:"creator" yaml:"creator"`
+  Owner sdk.AccAddress `json:"creator" yaml:"creator"`
 }
 
 func NewMsgDeleteMine(id string, creator sdk.AccAddress) MsgDeleteMine {
   return MsgDeleteMine{
     ID: id,
-		Creator: creator,
+		Owner: creator,
 	}
 }
 
@@ -28,7 +28,7 @@ func (msg MsgDeleteMine) Type() string {
 }
 
 func (msg MsgDeleteMine) GetSigners() []sdk.AccAddress {
-  return []sdk.AccAddress{sdk.AccAddress(msg.Creator)}
+  return []sdk.AccAddress{sdk.AccAddress(msg.Owner)}
 }
 
 func (msg MsgDeleteMine) GetSignBytes() []byte {
@@ -37,7 +37,7 @@ func (msg MsgDeleteMine) GetSignBytes() []byte {
 }
 
 func (msg MsgDeleteMine) ValidateBasic() error {
-  if msg.Creator.Empty() {
+  if msg.Owner.Empty() {
     return sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "creator can't be empty")
   }
   return nil

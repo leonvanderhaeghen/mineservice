@@ -9,7 +9,6 @@ import (
 
 func handleMsgCreateMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgCreateMine) (*sdk.Result, error) {
 	var mine = types.Mine{
-		Creator: msg.Creator,
 		ID:      msg.ID,
     	Name: msg.Name,
     	Price: msg.Price,

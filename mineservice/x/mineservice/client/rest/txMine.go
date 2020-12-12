@@ -16,14 +16,13 @@ var _ = strconv.Itoa(42)
 
 type createMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
+	Owner string `json:"owner"`
 	Name string `json:"name"`
 	Price string `json:"price"`
-	Owner string `json:"owner"`
 	Selling string `json:"selling"`
 	Efficiency string `json:"efficiency"`
 	Invetory string `json:"invetory"`
-	Resources string `json:"resources"`
+	Resources []string `json:"resources"`
 	UraniumCost string `json:"uraniumCost"`
 	
 }
@@ -39,7 +38,7 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		owner, err := sdk.AccAddressFromBech32(req.Owner)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -48,32 +47,28 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		
 		parsedName := req.Name
 		
-		parsedPrice := req.Price
+		parsedPrice,_ := sdk.ParseCoins(req.Price)
+				
+		parsedSelling := false
 		
-		parsedOwner := req.Owner
-		
-		parsedSelling := req.Selling
-		
-		parsedEfficiency := req.Efficiency
+		parsedEfficiency,_ := strconv.Atoi(req.Efficiency)
 		
 		parsedInvetory := req.Invetory
 		
 		parsedResources := req.Resources
 		
-		parsedUraniumCost := req.UraniumCost
+		parsedUraniumCost,_ := strconv.Atoi(req.UraniumCost)
 		
 
 		msg := types.NewMsgCreateMine(
-			creator,
+			owner,
 			parsedName,
 			parsedPrice,
-			parsedOwner,
 			parsedSelling,
 			parsedEfficiency,
 			parsedInvetory,
 			parsedResources,
 			parsedUraniumCost,
-			
 		)
 
 		err = msg.ValidateBasic()
@@ -89,14 +84,13 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 type setMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	ID 		string `json:"id"`
-	Creator string `json:"creator"`
 	Name string `json:"name"`
 	Price string `json:"price"`
 	Owner string `json:"owner"`
 	Selling string `json:"selling"`
 	Efficiency string `json:"efficiency"`
 	Invetory string `json:"invetory"`
-	Resources string `json:"resources"`
+	Resources []string `json:"resources"`
 	UraniumCost string `json:"uraniumCost"`
 	
 }
@@ -112,7 +106,7 @@ func setMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		owner, err := sdk.AccAddressFromBech32(req.Owner)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -121,27 +115,24 @@ func setMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		
 		parsedName := req.Name
 		
-		parsedPrice := req.Price
+		parsedPrice,_ := sdk.ParseCoins(req.Price)
+				
+		parsedSelling := false
 		
-		parsedOwner := req.Owner
-		
-		parsedSelling := req.Selling
-		
-		parsedEfficiency := req.Efficiency
+		parsedEfficiency,_ := strconv.Atoi(req.Efficiency)
 		
 		parsedInvetory := req.Invetory
 		
 		parsedResources := req.Resources
 		
-		parsedUraniumCost := req.UraniumCost
+		parsedUraniumCost,_ := strconv.Atoi(req.UraniumCost)
 		
 
 		msg := types.NewMsgSetMine(
-			creator,
+			owner,
 			req.ID,
 			parsedName,
 			parsedPrice,
-			parsedOwner,
 			parsedSelling,
 			parsedEfficiency,
 			parsedInvetory,
@@ -162,7 +153,7 @@ func setMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
+	Owner string `json:"creator"`
 	ID 		string `json:"id"`
 }
 
@@ -177,12 +168,12 @@ func deleteMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		owner, err := sdk.AccAddressFromBech32(req.Owner)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
 		}
-		msg := types.NewMsgDeleteMine(req.ID, creator)
+		msg := types.NewMsgDeleteMine(req.ID, owner)
 
 		err = msg.ValidateBasic()
 		if err != nil {

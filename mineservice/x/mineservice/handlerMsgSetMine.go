@@ -10,7 +10,6 @@ import (
 
 func handleMsgSetMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetMine) (*sdk.Result, error) {
 	var mine = types.Mine{
-		Creator: msg.Creator,
 		ID:      msg.ID,
     	Name: msg.Name,
     	Price: msg.Price,
@@ -21,7 +20,7 @@ func handleMsgSetMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetMine) (*
     	Resources: msg.Resources,
     	UraniumCost: msg.UraniumCost,
 	}
-	if !msg.Creator.Equals(k.GetMineOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
+	if !msg.Owner.Equals(k.GetMineOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error
 	}
 

@@ -14,7 +14,7 @@ func handleMsgDeleteMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgDeleteMi
 		// replace with ErrKeyNotFound for 0.39+
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, msg.ID)
 	}
-	if !msg.Creator.Equals(k.GetMineOwner(ctx, msg.ID)) {
+	if !msg.Owner.Equals(k.GetMineOwner(ctx, msg.ID)) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner")
 	}
 
