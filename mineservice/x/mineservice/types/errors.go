@@ -5,5 +5,5 @@ import (
 )
 
 var (
-	ErrInvalid = sdkerrors.Register(ModuleName, 1, "custom error message")
+	ErrNotSelling = sdkerrors.Register(ModuleName,1,"This item is currently not for sale")
 )

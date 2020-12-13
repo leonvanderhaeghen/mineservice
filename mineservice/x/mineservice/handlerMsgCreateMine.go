@@ -17,7 +17,8 @@ func handleMsgCreateMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgCreateMi
     	Efficiency: msg.Efficiency,
     	Invetory: msg.Invetory,
     	Resources: msg.Resources,
-    	UraniumCost: msg.UraniumCost,
+		UraniumCost: msg.UraniumCost,
+		ResourceCounter: 5,
 	}
 	k.CreateMine(ctx, mine)
 

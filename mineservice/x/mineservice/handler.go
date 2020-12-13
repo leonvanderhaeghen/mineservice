@@ -23,6 +23,8 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			return handleMsgDeleteMine(ctx, k, msg)
 		case types.MsgBuyMine:
 			return handleMsgBuyMine(ctx,k,msg)
+		case types.MsgSellMine:
+			return handleMsgSellMine(ctx,k,msg)
 		default:
 			errMsg := fmt.Sprintf("unrecognized %s message type: %T", types.ModuleName, msg)
 			return nil, sdkerrors.Wrap(sdkerrors.ErrUnknownRequest, errMsg)

@@ -10,7 +10,7 @@ var _ sdk.Msg = &MsgBuyMine{}
 
 type MsgBuyMine struct {
   ID      string `json:"id" yaml:"id"`
-  Buyer sdk.AccAddress `json:"Buyer" yaml:"Buyer"`
+  Buyer sdk.AccAddress `json:"buyer" yaml:"buyer"`
   Bid sdk.Coins `json:"price" yaml:"price"`
 }
 

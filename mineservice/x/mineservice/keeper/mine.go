@@ -81,7 +81,7 @@ func (k Keeper) GetMineOwner(ctx sdk.Context, key string) sdk.AccAddress {
 	if err != nil {
 		return nil
 	}
-	return mine.Creator
+	return mine.Owner
 }
 
 
@@ -115,4 +115,9 @@ func(k Keeper) SetSelling(ctx sdk.Context,key string,selling bool){
 	mine,_ := k.GetMine(ctx,key)
 	mine.Selling = selling
 	k.SetMine(ctx,mine)
+}
+
+func(k Keeper) IsSelling(ctx sdk.Context,key string) bool{
+	mine,_ := k.GetMine(ctx,key)
+	return mine.Selling
 }

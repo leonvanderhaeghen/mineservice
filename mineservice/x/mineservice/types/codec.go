@@ -11,6 +11,7 @@ func RegisterCodec(cdc *codec.Codec) {
 		cdc.RegisterConcrete(MsgBuyMine{}, "mineservice/BuyMine", nil)
 		cdc.RegisterConcrete(MsgSetMine{}, "mineservice/SetMine", nil)
 		cdc.RegisterConcrete(MsgDeleteMine{}, "mineservice/DeleteMine", nil)
+		cdc.RegisterConcrete(MsgSellMine{},"mineservice/SellMine",nil)
 }
 
 // ModuleCdc defines the module codec

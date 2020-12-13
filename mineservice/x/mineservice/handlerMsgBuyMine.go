@@ -9,6 +9,9 @@ import (
 )
 
 func handleMsgBuyMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgBuyMine) (*sdk.Result, error) {
+	if !k.IsSelling(ctx,msg.ID) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized,"This item is currently not for sale")
+	}
 	if k.GetPrice(ctx,msg.ID).IsAllGT(msg.Bid) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds,"Bid not high enough")
 	}

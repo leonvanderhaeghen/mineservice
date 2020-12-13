@@ -40,7 +40,28 @@ func GetCmdCreateMine(cdc *codec.Codec) *cobra.Command {
 		},
 	}
 }
+func GetCmdSellMine(cdc *codec.Codec) *cobra.Command{
+return &cobra.Command{
+		Use:   "sell-mine [id] [price]",
+		Short: "Creates a new mine",
+		Args:  cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			argsId := string(args[0])
+			argsPrice,_ := sdk.ParseCoins(args[1])
+			
 
+			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			inBuf := bufio.NewReader(cmd.InOrStdin())
+			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
+			msg := types.NewMsgSellMine(cliCtx.GetFromAddress(), string(argsId), argsPrice)
+			err := msg.ValidateBasic()
+			if err != nil {
+				return err
+			}
+			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
+		},
+	}
+}
 
 func GetCmdSetMine(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{

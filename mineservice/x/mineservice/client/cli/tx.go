@@ -22,7 +22,8 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 	}
 
 	mineserviceTxCmd.AddCommand(flags.PostCommands(
-    // this line is used by starport scaffolding # 1
+	// this line is used by starport scaffolding # 1
+		GetCmdSellMine(cdc),
 		GetCmdCreateMine(cdc),
 		GetCmdBuyMine(cdc),
 		GetCmdSetMine(cdc),

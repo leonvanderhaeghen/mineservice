@@ -9,13 +9,13 @@ var _ sdk.Msg = &MsgDeleteMine{}
 
 type MsgDeleteMine struct {
   ID      string         `json:"id" yaml:"id"`
-  Owner sdk.AccAddress `json:"creator" yaml:"creator"`
+  Owner sdk.AccAddress `json:"owner" yaml:"owner"`
 }
 
-func NewMsgDeleteMine(id string, creator sdk.AccAddress) MsgDeleteMine {
+func NewMsgDeleteMine(id string, owner sdk.AccAddress) MsgDeleteMine {
   return MsgDeleteMine{
     ID: id,
-		Owner: creator,
+		Owner: owner,
 	}
 }
 
