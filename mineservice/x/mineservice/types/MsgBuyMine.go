@@ -3,7 +3,6 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/google/uuid"
 )
 
 var _ sdk.Msg = &MsgBuyMine{}
@@ -16,7 +15,7 @@ type MsgBuyMine struct {
 
 func NewMsgBuyMine(id string,buyer sdk.AccAddress, bid sdk.Coins) MsgBuyMine {
   return MsgBuyMine{
-    ID: uuid.New().String(),
+    ID: id,
 	Buyer: buyer,
     Bid: bid,
 	}
