@@ -11,7 +11,7 @@ type Mine struct {
     Owner sdk.AccAddress `json:"owner" yaml:"owner"`
     Selling bool `json:"selling" yaml:"selling"`
     Efficiency int `json:"efficiency" yaml:"efficiency"`
-    Invetory string `json:"invetory" yaml:"invetory"` //later veranderen naar type invetory
+    Invetory []Resource `json:"invetory" yaml:"invetory"` //later veranderen naar type invetory
 	Resources []string `json:"resources" yaml:"resources"` //later veranderen naar type resources
 	ResourceCounter int `json:"ResourceCounter" yaml:"ResourceCounter"`
     UraniumCost int `json:"uraniumCost" yaml:"uraniumCost"`

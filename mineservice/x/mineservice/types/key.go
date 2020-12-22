@@ -18,3 +18,8 @@ const (
 	MinePrefix = "mine-"
 )
 		
+const (
+	ResourcePrefix = "resource-value-"
+	ResourceCountPrefix = "resource-count-"
+)
+		

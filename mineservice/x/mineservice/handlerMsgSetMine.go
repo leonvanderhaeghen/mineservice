@@ -16,7 +16,6 @@ func handleMsgSetMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetMine) (*
     	Owner: msg.Owner,
     	Selling: msg.Selling,
     	Efficiency: msg.Efficiency,
-    	Invetory: msg.Invetory,
     	Resources: msg.Resources,
     	UraniumCost: msg.UraniumCost,
 	}

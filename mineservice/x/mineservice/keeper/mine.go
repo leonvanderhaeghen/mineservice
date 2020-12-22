@@ -121,3 +121,5 @@ func(k Keeper) IsSelling(ctx sdk.Context,key string) bool{
 	mine,_ := k.GetMine(ctx,key)
 	return mine.Selling
 }
+
+

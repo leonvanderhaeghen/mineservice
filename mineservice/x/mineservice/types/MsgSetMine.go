@@ -14,7 +14,6 @@ type MsgSetMine struct {
   Price sdk.Coins `json:"price" yaml:"price"`
   Selling bool `json:"selling" yaml:"selling"`
   Efficiency int `json:"efficiency" yaml:"efficiency"`
-  Invetory string `json:"invetory" yaml:"invetory"`
   Resources []string `json:"resources" yaml:"resources"`
   UraniumCost int `json:"uraniumCost" yaml:"uraniumCost"`
   ResourceCounter int `json:"ResourceCounter" yaml:"ResourceCounter"`
@@ -28,7 +27,6 @@ func NewMsgSetMine(owner sdk.AccAddress, id string, name string, price sdk.Coins
     Owner: owner,
     Selling: selling,
     Efficiency: efficiency,
-    Invetory: invetory,
     Resources: resources,
     UraniumCost: uraniumCost,
 	}
