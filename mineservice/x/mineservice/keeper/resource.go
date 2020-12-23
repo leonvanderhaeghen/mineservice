@@ -46,7 +46,7 @@ func (k Keeper) CreateResource(ctx sdk.Context, resource types.Resource) {
 	key := []byte(types.ResourcePrefix + resource.ID)
 	value := k.cdc.MustMarshalBinaryLengthPrefixed(resource)
 	store.Set(key, value)
-
+	k.addResource(ctx,resource)
 	// Update resource count
     k.SetResourceCount(ctx, count+1)
 }
@@ -122,6 +122,13 @@ func (k Keeper) GetResourceOwner(ctx sdk.Context, key string) sdk.AccAddress {
 
 // Check if the key exists in the store
 func (k Keeper) ResourceExists(ctx sdk.Context, key string) bool {
+	store := ctx.KVStore(k.storeKey)
+	return store.Has([]byte(types.ResourcePrefix + key))
+}
+
+
+// Check if the key exists in the store
+func (k Keeper) ResourceExistsMine(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.ResourcePrefix + key))
 }

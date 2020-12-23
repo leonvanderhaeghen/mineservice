@@ -15,7 +15,6 @@ type MsgCreateMine struct {
   Owner sdk.AccAddress `json:"owner" yaml:"owner"`
   Selling bool `json:"selling" yaml:"selling"`
   Efficiency int `json:"efficiency" yaml:"efficiency"`
-  Invetory string `json:"invetory" yaml:"invetory"`
   Resources []string `json:"resources" yaml:"resources"`
   UraniumCost int `json:"uraniumCost" yaml:"uraniumCost"`
   ResourceCounter int `json:"ResourceCounter" yaml:"ResourceCounter"`
@@ -29,7 +28,6 @@ func NewMsgCreateMine(owner sdk.AccAddress, name string, price sdk.Coins, sellin
     Owner: owner,
     Selling: selling,
     Efficiency: efficiency,
-    Invetory: invetory,
     Resources: resources,
     UraniumCost: uraniumCost,
 	}

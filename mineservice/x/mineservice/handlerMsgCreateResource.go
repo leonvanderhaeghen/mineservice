@@ -17,7 +17,7 @@ func handleMsgCreateResource(ctx sdk.Context, k keeper.Keeper, msg types.MsgCrea
 		Amount: msg.Amount,
 	}
 		
-		k.CreateResource(ctx, resource)
+	k.CreateResource(ctx, resource)
 
 
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil

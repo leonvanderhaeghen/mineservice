@@ -122,4 +122,35 @@ func(k Keeper) IsSelling(ctx sdk.Context,key string) bool{
 	return mine.Selling
 }
 
+func(k Keeper) addResource(ctx sdk.Context,resource types.Resource){
+	mine,_ := k.GetMine(ctx,resource.MineID)
+	if k.resourceExistsInMine(ctx,resource.MineID,resource.Name) {
+		k.updateResourceAmountByName(ctx,resource.MineID,resource.Name,resource.Amount)
+	}else{
+		mine.Invetory = append(mine.Invetory, resource)
+		k.SetMine(ctx,mine)
+	}
+}
 
+func(k Keeper) resourceExistsInMine(ctx sdk.Context,key string,resourceName string)bool{
+	mine,_ := k.GetMine(ctx,key)
+	resources := mine.Invetory
+	exists := false
+	for i := 0; i < len(resources); i++ {
+		if resources[i].Name == resourceName {
+			exists = true
+		}
+	}
+	return exists
+}
+
+func(k Keeper) updateResourceAmountByName(ctx sdk.Context,key string,resourceName string,resourceAmount int){
+	mine,_ := k.GetMine(ctx,key)
+	resources := mine.Invetory
+	for i := 0; i < len(resources); i++ {
+		if resources[i].Name == resourceName {
+				resources[i].Amount += resourceAmount
+		}
+	}
+	k.SetMine(ctx,mine)
+} 
