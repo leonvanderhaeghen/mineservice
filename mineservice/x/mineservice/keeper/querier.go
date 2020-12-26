@@ -6,6 +6,8 @@ import (
 		
 	
 		
+	
+		
 	abci "github.com/tendermint/tendermint/abci/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -17,6 +19,10 @@ func NewQuerier(k Keeper) sdk.Querier {
 	return func(ctx sdk.Context, path []string, req abci.RequestQuery) ([]byte, error) {
 		switch path[0] {
     // this line is used by starport scaffolding # 2
+		case types.QueryListPlayer:
+			return listPlayer(ctx, k)
+		case types.QueryGetPlayer:
+			return getPlayer(ctx, path[1:], k)
 		case types.QueryListResource:
 			return listResource(ctx, k)
 		case types.QueryGetResource:

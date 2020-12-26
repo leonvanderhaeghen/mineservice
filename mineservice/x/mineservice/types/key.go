@@ -23,3 +23,8 @@ const (
 	ResourceCountPrefix = "resource-count-"
 )
 		
+const (
+	PlayerPrefix = "player-value-"
+	PlayerCountPrefix = "player-count-"
+)
+		

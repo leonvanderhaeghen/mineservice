@@ -91,33 +91,33 @@ func (k Keeper) MineExists(ctx sdk.Context, key string) bool {
 	return store.Has([]byte(types.MinePrefix + key))
 }
 
-func (k Keeper) GetPrice(ctx sdk.Context,key string) sdk.Coins{
+func (k Keeper) GetMinePrice(ctx sdk.Context,key string) sdk.Coins{
 	mine,_ := k.GetMine(ctx,key)
 	return mine.Price
 }
-func (k Keeper) HasOwner(ctx sdk.Context,key string) bool{
+func (k Keeper) HasMineOwner(ctx sdk.Context,key string) bool{
 	mine,_ := k.GetMine(ctx,key)
 	return !mine.Owner.Empty()
 }
 
-func (k Keeper) SetPrice(ctx sdk.Context,key string,price sdk.Coins){
+func (k Keeper) SetMinePrice(ctx sdk.Context,key string,price sdk.Coins){
 	mine,_ := k.GetMine(ctx,key)
 	mine.Price = price
 	k.SetMine(ctx,mine)
 }
 
-func (k Keeper) SetOwner(ctx sdk.Context,key string,owner sdk.AccAddress){
+func (k Keeper) SetMineOwner(ctx sdk.Context,key string,owner sdk.AccAddress){
 	mine,_ := k.GetMine(ctx,key)
 	mine.Owner = owner
 	k.SetMine(ctx,mine)
 }
-func(k Keeper) SetSelling(ctx sdk.Context,key string,selling bool){
+func(k Keeper) SetMineSelling(ctx sdk.Context,key string,selling bool){
 	mine,_ := k.GetMine(ctx,key)
 	mine.Selling = selling
 	k.SetMine(ctx,mine)
 }
 
-func(k Keeper) IsSelling(ctx sdk.Context,key string) bool{
+func(k Keeper) IsMineSelling(ctx sdk.Context,key string) bool{
 	mine,_ := k.GetMine(ctx,key)
 	return mine.Selling
 }

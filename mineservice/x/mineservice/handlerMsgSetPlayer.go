@@ -8,11 +8,17 @@ import (
 	"github.com/leonvanderhaeghen/mineservice/x/mineservice/keeper"
 )
 
-func handleMsgSellMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgSellMine) (*sdk.Result, error) {
-	if !msg.Owner.Equals(k.GetMineOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
+func handleMsgSetPlayer(ctx sdk.Context, k keeper.Keeper, msg types.MsgSetPlayer) (*sdk.Result, error) {
+	var player = types.Player{
+		Creator: msg.Creator,
+		ID:      msg.ID,
+    	Name: msg.Name,
+	}
+	if !msg.Creator.Equals(k.GetPlayerOwner(ctx, msg.ID)) { // Checks if the the msg sender is the same as the current owner
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner") // If not, throw an error
-	}	
-	k.SetMineSelling(ctx,msg.ID,true)
-	k.SetMinePrice(ctx,msg.ID,msg.AskingPrice)
+	}
+
+	k.SetPlayer(ctx, player)
+
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
 }

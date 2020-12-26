@@ -9,13 +9,13 @@ import (
 )
 
 func handleMsgBuyMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgBuyMine) (*sdk.Result, error) {
-	if !k.IsSelling(ctx,msg.ID) {
+	if !k.IsMineSelling(ctx,msg.ID) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized,"This item is currently not for sale")
 	}
-	if k.GetPrice(ctx,msg.ID).IsAllGT(msg.Bid) {
+	if k.GetMinePrice(ctx,msg.ID).IsAllGT(msg.Bid) {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds,"Bid not high enough")
 	}
-	if k.HasOwner(ctx,msg.ID) {
+	if k.HasMineOwner(ctx,msg.ID) {
 		err := k.CoinKeeper.SendCoins(ctx,msg.Buyer,k.GetMineOwner(ctx,msg.ID),msg.Bid)
 		if err != nil {
 			return nil,err
@@ -26,8 +26,8 @@ func handleMsgBuyMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgBuyMine) (*
 			return nil, err
 		}
 	}	
-	k.SetOwner(ctx,msg.ID,msg.Buyer)
-	k.SetSelling(ctx,msg.ID,false)
-	k.SetPrice(ctx,msg.ID,msg.Bid)
+	k.SetMineOwner(ctx,msg.ID,msg.Buyer)
+	k.SetMineSelling(ctx,msg.ID,false)
+	k.SetMinePrice(ctx,msg.ID,msg.Bid)
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
 }

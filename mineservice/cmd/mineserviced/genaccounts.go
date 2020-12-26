@@ -47,6 +47,7 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 			config.SetRoot(viper.GetString(cli.HomeFlag))
 
 			addr, err := sdk.AccAddressFromBech32(args[0])
+			
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			if err != nil {
 				// attempt to lookup address from Keybase if no address was provided

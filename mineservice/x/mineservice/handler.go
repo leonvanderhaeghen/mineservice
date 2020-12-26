@@ -15,6 +15,12 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		ctx = ctx.WithEventManager(sdk.NewEventManager())
 		switch msg := msg.(type) {
     // this line is used by starport scaffolding # 1
+		case types.MsgCreatePlayer:
+			return handleMsgCreatePlayer(ctx, k, msg)
+		case types.MsgSetPlayer:
+			return handleMsgSetPlayer(ctx, k, msg)
+		case types.MsgDeletePlayer:
+			return handleMsgDeletePlayer(ctx, k, msg)
 		case types.MsgCreateResource:
 			return handleMsgCreateResource(ctx, k, msg)
 		case types.MsgSetResource:

@@ -30,6 +30,8 @@ func GetQueryCmd(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	mineserviceQueryCmd.AddCommand(
 		flags.GetCommands(
       // this line is used by starport scaffolding # 1
+			GetCmdListPlayer(queryRoute, cdc),
+			GetCmdGetPlayer(queryRoute, cdc),
 			GetCmdListResource(queryRoute, cdc),
 			GetCmdGetResource(queryRoute, cdc),
 			GetCmdListMine(queryRoute, cdc),

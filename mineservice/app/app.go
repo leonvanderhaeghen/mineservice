@@ -81,7 +81,6 @@ type NewApp struct {
 	mineserviceKeeper mineservicekeeper.Keeper
   // this line is used by starport scaffolding # 3
 	mm *module.Manager
-
 	sm *module.SimulationManager
 }
 

@@ -7,6 +7,9 @@ import (
 // RegisterCodec registers concrete types on codec
 func RegisterCodec(cdc *codec.Codec) {
   // this line is used by starport scaffolding # 1
+		cdc.RegisterConcrete(MsgCreatePlayer{}, "mineservice/CreatePlayer", nil)
+		cdc.RegisterConcrete(MsgSetPlayer{}, "mineservice/SetPlayer", nil)
+		cdc.RegisterConcrete(MsgDeletePlayer{}, "mineservice/DeletePlayer", nil)
 		cdc.RegisterConcrete(MsgCreateResource{}, "mineservice/CreateResource", nil)
 		cdc.RegisterConcrete(MsgSetResource{}, "mineservice/SetResource", nil)
 		cdc.RegisterConcrete(MsgDeleteResource{}, "mineservice/DeleteResource", nil)
