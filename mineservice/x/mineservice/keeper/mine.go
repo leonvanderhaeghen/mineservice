@@ -121,11 +121,19 @@ func(k Keeper) IsMineSelling(ctx sdk.Context,key string) bool{
 	mine,_ := k.GetMine(ctx,key)
 	return mine.Selling
 }
-
-func(k Keeper) addResource(ctx sdk.Context,resource types.Resource){
+func(k Keeper) moveResourceFromMine(ctx sdk.Context,resource types.Resource){
+	mine,_ := k.GetMine(ctx,resource.MineID)
+	if k.checkResourceAmount(ctx,resource.MineID,resource.Name,resource.Amount) {
+		k.updateMineResourceAmountByName(ctx,resource.MineID,resource.Name,-resource.Amount)
+	}else{
+		mine.Invetory = append(mine.Invetory, resource)
+		k.SetMine(ctx,mine)
+	}
+}
+func(k Keeper) addResourceMine(ctx sdk.Context,resource types.Resource){
 	mine,_ := k.GetMine(ctx,resource.MineID)
 	if k.resourceExistsInMine(ctx,resource.MineID,resource.Name) {
-		k.updateResourceAmountByName(ctx,resource.MineID,resource.Name,resource.Amount)
+		k.updateMineResourceAmountByName(ctx,resource.MineID,resource.Name,resource.Amount)
 	}else{
 		mine.Invetory = append(mine.Invetory, resource)
 		k.SetMine(ctx,mine)
@@ -144,7 +152,7 @@ func(k Keeper) resourceExistsInMine(ctx sdk.Context,key string,resourceName stri
 	return exists
 }
 
-func(k Keeper) updateResourceAmountByName(ctx sdk.Context,key string,resourceName string,resourceAmount int){
+func(k Keeper) updateMineResourceAmountByName(ctx sdk.Context,key string,resourceName string,resourceAmount int){
 	mine,_ := k.GetMine(ctx,key)
 	resources := mine.Invetory
 	for i := 0; i < len(resources); i++ {
@@ -153,4 +161,15 @@ func(k Keeper) updateResourceAmountByName(ctx sdk.Context,key string,resourceNam
 		}
 	}
 	k.SetMine(ctx,mine)
+}
+
+func(k Keeper) checkResourceAmount(ctx sdk.Context,key string,resourceName string,resourceAmount int)bool{
+	mine,_ := k.GetMine(ctx,key)
+	resources := mine.Invetory
+	for i := 0; i < len(resources); i++ {
+		if resources[i].Name == resourceName {
+				return resources[i].Amount >= resourceAmount
+		}
+	}
+	return false
 } 

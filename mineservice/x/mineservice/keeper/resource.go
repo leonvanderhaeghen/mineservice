@@ -46,7 +46,7 @@ func (k Keeper) CreateResource(ctx sdk.Context, resource types.Resource) {
 	key := []byte(types.ResourcePrefix + resource.ID)
 	value := k.cdc.MustMarshalBinaryLengthPrefixed(resource)
 	store.Set(key, value)
-	k.addResource(ctx,resource)
+	k.addResourceMine(ctx,resource)
 	// Update resource count
     k.SetResourceCount(ctx, count+1)
 }
