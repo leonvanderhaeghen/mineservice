@@ -23,6 +23,8 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			return handleMsgDeletePlayer(ctx, k, msg)
 		case types.MsgCreateResource:
 			return handleMsgCreateResource(ctx, k, msg)
+		case types.MsgMoveResource:
+			return handleMsgMoveResource(ctx, k, msg)
 		case types.MsgSetResource:
 			return handleMsgSetResource(ctx, k, msg)
 		case types.MsgDeleteResource:

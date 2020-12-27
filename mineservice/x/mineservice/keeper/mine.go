@@ -121,10 +121,12 @@ func(k Keeper) IsMineSelling(ctx sdk.Context,key string) bool{
 	mine,_ := k.GetMine(ctx,key)
 	return mine.Selling
 }
-func(k Keeper) moveResourceFromMine(ctx sdk.Context,resource types.Resource,playerID string){
+func(k Keeper) MoveResourceFromMine(ctx sdk.Context,key string,newResource types.Resource,playerID string){
+	resource,_ := k.GetResource(ctx,key)
 	if k.checkResourceAmount(ctx,resource.MineID,resource.Name,resource.Amount) {
 		k.updateMineResourceAmountByName(ctx,resource.MineID,resource.Name,-resource.Amount)
-		k.addResourcePlayer(ctx,resource,playerID)
+		newResource.Name = resource.Name
+		k.AddResourcePlayer(ctx,newResource,playerID)
 	}
 }
 func(k Keeper) addResourceMine(ctx sdk.Context,resource types.Resource){

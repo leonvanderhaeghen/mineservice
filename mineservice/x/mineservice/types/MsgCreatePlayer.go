@@ -3,17 +3,20 @@ package types
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/google/uuid"
 )
 
 var _ sdk.Msg = &MsgCreatePlayer{}
 
 type MsgCreatePlayer struct {
+	  ID      string
   Creator sdk.AccAddress `json:"creator" yaml:"creator"`
   Name string `json:"name" yaml:"name"`
 }
 
 func NewMsgCreatePlayer(creator sdk.AccAddress, name string, invetory string, mines string) MsgCreatePlayer {
   return MsgCreatePlayer{
+	ID: uuid.New().String(),
 	Creator: creator,
     Name: name,
 	}

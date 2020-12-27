@@ -18,6 +18,15 @@ func handleMsgMoveResource(ctx sdk.Context, k keeper.Keeper, msg types.MsgMoveRe
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Incorrect Owner")
 	}
 
+	var resource = types.Resource{
+		ID:      msg.NewID,
+    	Owner: msg.Creator,
+		Selling: false,
+		Amount: msg.Amount,
+	}
+
+	k.MoveResourceFromMine(ctx,msg.ID,resource,msg.PlayerID)
 	k.DeleteResource(ctx, msg.ID)
+	
 	return &sdk.Result{}, nil
 }

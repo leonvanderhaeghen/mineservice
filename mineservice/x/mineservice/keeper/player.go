@@ -139,6 +139,7 @@ func (k Keeper) AddMineToPlayer(ctx sdk.Context, key string,mineID string){
 	player.Mines = append(player.Mines,mine)
 	k.SetPlayer(ctx,player)
 }
+
 func (k Keeper) RemoveMineFromPlayer(ctx sdk.Context, key string,mineID string){
 	player,_ := k.GetPlayer(ctx, key)
 	mineIndex := k.GetMineIndexFromPlayer(ctx,key,mineID)
@@ -148,8 +149,41 @@ func (k Keeper) RemoveMineFromPlayer(ctx sdk.Context, key string,mineID string){
 	}
 	
 }
-func removeMine(slice []types.Mine, s int) []types.Mine {
-    return append(slice[:s], slice[s+1:]...)
+
+
+
+func(k Keeper) AddResourcePlayer(ctx sdk.Context,newResource types.Resource,playerID string){
+	player,_ := k.GetPlayer(ctx,playerID)
+	if k.ResourceExistsInPlayer(ctx,playerID,newResource.Name) {
+		k.UpdatePlayerResourceAmountByName(ctx,playerID,newResource.Name,newResource.Amount)
+	}else{
+		k.CreateResource(ctx,newResource)
+		player.Invetory = append(player.Invetory, newResource)
+		k.SetPlayer(ctx,player)
+	}
+}
+
+func(k Keeper) ResourceExistsInPlayer(ctx sdk.Context,key string,resourceName string)bool{
+	player,_ := k.GetPlayer(ctx,key)
+	resources := player.Invetory
+	exists := false
+	for i := 0; i < len(resources); i++ {
+		if resources[i].Name == resourceName {
+			exists = true
+		}
+	}
+	return exists
+}
+
+func(k Keeper) UpdatePlayerResourceAmountByName(ctx sdk.Context,key string,resourceName string,resourceAmount int){
+	player,_ := k.GetPlayer(ctx,key)
+	resources := player.Invetory
+	for i := 0; i < len(resources); i++ {
+		if resources[i].Name == resourceName {
+				resources[i].Amount += resourceAmount
+		}
+	}
+	k.SetPlayer(ctx,player)
 }
 
 func (k Keeper) GetMineIndexFromPlayer(ctx sdk.Context, key string,mineID string)int{
@@ -162,36 +196,6 @@ func (k Keeper) GetMineIndexFromPlayer(ctx sdk.Context, key string,mineID string
 	}
 	return -1
 } 
-func(k Keeper) addResourcePlayer(ctx sdk.Context,resource types.Resource,playerID string){
-	player,_ := k.GetPlayer(ctx,playerID)
-	if k.resourceExistsInPlayer(ctx,resource.MineID,resource.Name) {
-		k.updatePlayerResourceAmountByName(ctx,playerID,resource.Name,resource.Amount)
-	}else{
-		resource.MineID = ""
-		player.Invetory = append(player.Invetory, resource)
-		k.SetPlayer(ctx,player)
-	}
-}
-
-func(k Keeper) resourceExistsInPlayer(ctx sdk.Context,key string,resourceName string)bool{
-	player,_ := k.GetPlayer(ctx,key)
-	resources := player.Invetory
-	exists := false
-	for i := 0; i < len(resources); i++ {
-		if resources[i].Name == resourceName {
-			exists = true
-		}
-	}
-	return exists
-}
-
-func(k Keeper) updatePlayerResourceAmountByName(ctx sdk.Context,key string,resourceName string,resourceAmount int){
-	player,_ := k.GetPlayer(ctx,key)
-	resources := player.Invetory
-	for i := 0; i < len(resources); i++ {
-		if resources[i].Name == resourceName {
-				resources[i].Amount += resourceAmount
-		}
-	}
-	k.SetPlayer(ctx,player)
+func removeMine(slice []types.Mine, s int) []types.Mine {
+    return append(slice[:s], slice[s+1:]...)
 }
