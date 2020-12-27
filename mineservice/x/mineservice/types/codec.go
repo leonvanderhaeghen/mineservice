@@ -13,6 +13,7 @@ func RegisterCodec(cdc *codec.Codec) {
 		cdc.RegisterConcrete(MsgCreateResource{}, "mineservice/CreateResource", nil)
 		cdc.RegisterConcrete(MsgSetResource{}, "mineservice/SetResource", nil)
 		cdc.RegisterConcrete(MsgDeleteResource{}, "mineservice/DeleteResource", nil)
+		cdc.RegisterConcrete(MsgMoveResource{}, "mineservice/MoveResource", nil)
 		cdc.RegisterConcrete(MsgCreateMine{}, "mineservice/CreateMine", nil)
 		cdc.RegisterConcrete(MsgBuyMine{}, "mineservice/BuyMine", nil)
 		cdc.RegisterConcrete(MsgSetMine{}, "mineservice/SetMine", nil)
