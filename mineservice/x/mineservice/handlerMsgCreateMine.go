@@ -20,6 +20,7 @@ func handleMsgCreateMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgCreateMi
 		ResourceCounter: 5,
 	}
 	k.CreateMine(ctx, mine)
+	k.AddMineToPlayer(ctx,msg.PlayerID,mine.ID)
 
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
 }

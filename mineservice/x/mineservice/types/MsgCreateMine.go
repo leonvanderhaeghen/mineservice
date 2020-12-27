@@ -13,6 +13,7 @@ type MsgCreateMine struct {
   Name string `json:"name" yaml:"name"`
   Price sdk.Coins `json:"price" yaml:"price"`
   Owner sdk.AccAddress `json:"owner" yaml:"owner"`
+  PlayerID      string `json:"playerid" yaml:"playerid"`
   Selling bool `json:"selling" yaml:"selling"`
   Efficiency int `json:"efficiency" yaml:"efficiency"`
   Resources []string `json:"resources" yaml:"resources"`
@@ -20,16 +21,17 @@ type MsgCreateMine struct {
   ResourceCounter int `json:"ResourceCounter" yaml:"ResourceCounter"`
 }
 
-func NewMsgCreateMine(owner sdk.AccAddress, name string, price sdk.Coins, selling bool, efficiency int, invetory string, resources []string, uraniumCost int) MsgCreateMine {
+func NewMsgCreateMine(owner sdk.AccAddress,playerID string, name string, price sdk.Coins, selling bool, efficiency int, invetory string, resources []string, uraniumCost int) MsgCreateMine {
   return MsgCreateMine{
     ID: uuid.New().String(),
     Name: name,
     Price: price,
-    Owner: owner,
+	Owner: owner,
+	PlayerID: playerID,
     Selling: selling,
     Efficiency: efficiency,
     Resources: resources,
-    UraniumCost: uraniumCost,
+	UraniumCost: uraniumCost,
 	}
 }
 
