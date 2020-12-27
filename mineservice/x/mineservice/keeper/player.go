@@ -133,6 +133,12 @@ func (k Keeper) PlayerExists(ctx sdk.Context, key string) bool {
 }
 
 
+func (k Keeper) AddMineToPlayer(ctx sdk.Context, key string,mine types.Mine){
+	player,_ := k.GetPlayer(ctx, key)
+	player.Mines = append(player.Mines,mine)
+	k.SetPlayer(ctx,player)
+}
+
 func(k Keeper) addResourcePlayer(ctx sdk.Context,resource types.Resource,playerID string){
 	player,_ := k.GetPlayer(ctx,playerID)
 	if k.resourceExistsInPlayer(ctx,resource.MineID,resource.Name) {
