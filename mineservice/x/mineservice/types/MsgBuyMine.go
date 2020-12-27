@@ -9,15 +9,19 @@ var _ sdk.Msg = &MsgBuyMine{}
 
 type MsgBuyMine struct {
   ID      string `json:"id" yaml:"id"`
+  BuyerPlayerID      string `json:"buyerplayerid" yaml:"buyerplayerid"`
+  SellerPlayerID      string `json:"sellerplayerid" yaml:"sellerplayerid"`
   Buyer sdk.AccAddress `json:"buyer" yaml:"buyer"`
   Bid sdk.Coins `json:"price" yaml:"price"`
 }
 
-func NewMsgBuyMine(id string,buyer sdk.AccAddress, bid sdk.Coins) MsgBuyMine {
+func NewMsgBuyMine(id string,buyerPlayerID string,sellerPlayerID string,buyer sdk.AccAddress, bid sdk.Coins) MsgBuyMine {
   return MsgBuyMine{
     ID: id,
 	Buyer: buyer,
-    Bid: bid,
+	Bid: bid,
+	BuyerPlayerID: buyerPlayerID,
+	SellerPlayerID: sellerPlayerID,
 	}
 }
 

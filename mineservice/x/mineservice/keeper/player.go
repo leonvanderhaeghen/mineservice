@@ -133,12 +133,35 @@ func (k Keeper) PlayerExists(ctx sdk.Context, key string) bool {
 }
 
 
-func (k Keeper) AddMineToPlayer(ctx sdk.Context, key string,mine types.Mine){
+func (k Keeper) AddMineToPlayer(ctx sdk.Context, key string,mineID string){
 	player,_ := k.GetPlayer(ctx, key)
+	mine,_ :=k.GetMine(ctx,mineID)
 	player.Mines = append(player.Mines,mine)
 	k.SetPlayer(ctx,player)
 }
+func (k Keeper) RemoveMineFromPlayer(ctx sdk.Context, key string,mineID string){
+	player,_ := k.GetPlayer(ctx, key)
+	mineIndex := k.GetMineIndexFromPlayer(ctx,key,mineID)
+	if mineIndex >=0 {
+			player.Mines = removeMine(player.Mines,mineIndex)
+			k.SetPlayer(ctx,player)
+	}
+	
+}
+func removeMine(slice []types.Mine, s int) []types.Mine {
+    return append(slice[:s], slice[s+1:]...)
+}
 
+func (k Keeper) GetMineIndexFromPlayer(ctx sdk.Context, key string,mineID string)int{
+	player,_ := k.GetPlayer(ctx, key)
+	mine,_ :=k.GetMine(ctx,mineID)
+	for i := 0; i < len(player.Mines); i++ {
+		if player.Mines[i].ID == mine.ID {
+			return i
+		}
+	}
+	return -1
+} 
 func(k Keeper) addResourcePlayer(ctx sdk.Context,resource types.Resource,playerID string){
 	player,_ := k.GetPlayer(ctx,playerID)
 	if k.resourceExistsInPlayer(ctx,resource.MineID,resource.Name) {

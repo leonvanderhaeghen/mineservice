@@ -25,7 +25,9 @@ func handleMsgBuyMine(ctx sdk.Context, k keeper.Keeper, msg types.MsgBuyMine) (*
 		if err != nil {
 			return nil, err
 		}
-	}	
+	}
+	k.AddMineToPlayer(ctx,msg.BuyerPlayerID,msg.ID)	
+	k.RemoveMineFromPlayer(ctx,msg.SellerPlayerID,msg.ID)	
 	k.SetMineOwner(ctx,msg.ID,msg.Buyer)
 	k.SetMineSelling(ctx,msg.ID,false)
 	k.SetMinePrice(ctx,msg.ID,msg.Bid)
