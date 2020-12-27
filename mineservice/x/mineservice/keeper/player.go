@@ -1,12 +1,13 @@
 package keeper
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"strconv"
 
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+
+	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/leonvanderhaeghen/mineservice/x/mineservice/types"
-    "github.com/cosmos/cosmos-sdk/codec"
 )
 
 // GetPlayerCount get the total number of player
@@ -125,9 +126,43 @@ func (k Keeper) GetPlayerOwner(ctx sdk.Context, key string) sdk.AccAddress {
 	return player.Creator
 }
 
-
 // Check if the key exists in the store
 func (k Keeper) PlayerExists(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.PlayerPrefix + key))
+}
+
+
+func(k Keeper) addResourcePlayer(ctx sdk.Context,resource types.Resource,playerID string){
+	player,_ := k.GetPlayer(ctx,playerID)
+	if k.resourceExistsInPlayer(ctx,resource.MineID,resource.Name) {
+		k.updatePlayerResourceAmountByName(ctx,playerID,resource.Name,resource.Amount)
+	}else{
+		resource.MineID = ""
+		player.Invetory = append(player.Invetory, resource)
+		k.SetPlayer(ctx,player)
+	}
+}
+
+func(k Keeper) resourceExistsInPlayer(ctx sdk.Context,key string,resourceName string)bool{
+	player,_ := k.GetPlayer(ctx,key)
+	resources := player.Invetory
+	exists := false
+	for i := 0; i < len(resources); i++ {
+		if resources[i].Name == resourceName {
+			exists = true
+		}
+	}
+	return exists
+}
+
+func(k Keeper) updatePlayerResourceAmountByName(ctx sdk.Context,key string,resourceName string,resourceAmount int){
+	player,_ := k.GetPlayer(ctx,key)
+	resources := player.Invetory
+	for i := 0; i < len(resources); i++ {
+		if resources[i].Name == resourceName {
+				resources[i].Amount += resourceAmount
+		}
+	}
+	k.SetPlayer(ctx,player)
 }
