@@ -18,6 +18,7 @@ var _ = strconv.Itoa(42)
 type createMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	Owner string `json:"owner"`
+	PlayerID string `json:"owner"`
 	Name string `json:"name"`
 	Price string `json:"price"`
 	Selling string `json:"selling"`
@@ -47,6 +48,7 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 		
 		parsedName := req.Name
+		parsedPlayerID := req.PlayerID
 		
 		parsedPrice,_ := sdk.ParseCoins(req.Price)
 				
@@ -63,6 +65,7 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 		msg := types.NewMsgCreateMine(
 			owner,
+			parsedPlayerID,
 			parsedName,
 			parsedPrice,
 			parsedSelling,
@@ -226,6 +229,8 @@ return func(w http.ResponseWriter, r *http.Request) {
 type buyMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	ID 		string `json:"id"`
+	BuyerID 		string `json:"buyerid"`
+	SellerID 		string `json:"sellerid"`
 	Owner string `json:"owner"`
 	Price string `json:"price"`
 }
@@ -248,7 +253,9 @@ return func(w http.ResponseWriter, r *http.Request) {
 		}
 		parsedPrice,_ := sdk.ParseCoins(req.Price)
 		parsedID := req.ID
-		msg := types.NewMsgBuyMine(parsedID,owner,parsedPrice)
+		parsedBuyerID := req.BuyerID
+		parsedSellerID := req.SellerID
+		msg := types.NewMsgBuyMine(parsedID,parsedBuyerID,parsedSellerID,owner,parsedPrice)
 
 		err = msg.ValidateBasic()
 		if err != nil {
