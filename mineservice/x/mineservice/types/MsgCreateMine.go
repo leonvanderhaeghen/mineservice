@@ -21,7 +21,7 @@ type MsgCreateMine struct {
   ResourceCounter int `json:"ResourceCounter" yaml:"ResourceCounter"`
 }
 
-func NewMsgCreateMine(owner sdk.AccAddress,playerID string, name string, price sdk.Coins, selling bool, efficiency int, invetory string, resources []string, uraniumCost int) MsgCreateMine {
+func NewMsgCreateMine(owner sdk.AccAddress,playerID string, name string, price sdk.Coins, selling bool, efficiency int, resources []string, uraniumCost int) MsgCreateMine {
   return MsgCreateMine{
     ID: uuid.New().String(),
     Name: name,

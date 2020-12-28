@@ -18,8 +18,6 @@ type createPlayerRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	Creator string `json:"creator"`
 	Name string `json:"name"`
-	Invetory string `json:"invetory"`
-	Mines string `json:"mines"`
 	
 }
 
@@ -43,16 +41,11 @@ func createPlayerHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		
 		parsedName := req.Name
 		
-		parsedInvetory := req.Invetory
-		
-		parsedMines := req.Mines
 		
 
 		msg := types.NewMsgCreatePlayer(
 			creator,
 			parsedName,
-			parsedInvetory,
-			parsedMines,
 			
 		)
 
@@ -96,18 +89,12 @@ func setPlayerHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		
 		parsedName := req.Name
 		
-		parsedInvetory := req.Invetory
-		
-		parsedMines := req.Mines
 		
 
 		msg := types.NewMsgSetPlayer(
-			creator,
+			creator, 
 			req.ID,
 			parsedName,
-			parsedInvetory,
-			parsedMines,
-			
 		)
 
 		err = msg.ValidateBasic()

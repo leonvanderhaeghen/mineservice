@@ -15,18 +15,17 @@ import (
 
 func GetCmdCreatePlayer(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-player [name] [invetory] [mines]",
+		Use:   "create-player [name]",
 		Short: "Creates a new player",
-		Args:  cobra.ExactArgs(3),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			argsName := string(args[0] )
-			argsInvetory := string(args[1] )
-			argsMines := string(args[2] )
+
 			
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreatePlayer(cliCtx.GetFromAddress(), string(argsName), string(argsInvetory), string(argsMines))
+			msg := types.NewMsgCreatePlayer(cliCtx.GetFromAddress(), string(argsName))
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err

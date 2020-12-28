@@ -23,7 +23,6 @@ type createMineRequest struct {
 	Price string `json:"price"`
 	Selling string `json:"selling"`
 	Efficiency string `json:"efficiency"`
-	Invetory string `json:"invetory"`
 	Resources []string `json:"resources"`
 	UraniumCost string `json:"uraniumCost"`
 	
@@ -55,9 +54,7 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		parsedSelling := false
 		
 		parsedEfficiency,_ := strconv.Atoi(req.Efficiency)
-		
-		parsedInvetory := req.Invetory
-		
+				
 		parsedResources := req.Resources
 		
 		parsedUraniumCost,_ := strconv.Atoi(req.UraniumCost)
@@ -70,7 +67,6 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 			parsedPrice,
 			parsedSelling,
 			parsedEfficiency,
-			parsedInvetory,
 			parsedResources,
 			parsedUraniumCost,
 		)

@@ -9,12 +9,12 @@ import (
 var _ sdk.Msg = &MsgCreatePlayer{}
 
 type MsgCreatePlayer struct {
-	  ID      string
+  ID      string
   Creator sdk.AccAddress `json:"creator" yaml:"creator"`
   Name string `json:"name" yaml:"name"`
 }
 
-func NewMsgCreatePlayer(creator sdk.AccAddress, name string, invetory string, mines string) MsgCreatePlayer {
+func NewMsgCreatePlayer(creator sdk.AccAddress, name string) MsgCreatePlayer {
   return MsgCreatePlayer{
 	ID: uuid.New().String(),
 	Creator: creator,

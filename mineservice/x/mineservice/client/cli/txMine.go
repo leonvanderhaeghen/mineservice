@@ -16,23 +16,22 @@ import (
 
 func GetCmdCreateMine(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-mine [name] [price] [selling] [efficiency] [invetory] [uraniumCost] [playerid] [resources] ",
+		Use:   "create-mine [name] [price] [selling] [efficiency] [uraniumCost] [playerid] [resources] ",
 		Short: "Creates a new mine",
-		Args:  cobra.ExactArgs(8),
+		Args:  cobra.ExactArgs(7),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			argsName := string(args[0])
 			argsPrice,_ := sdk.ParseCoins(args[1])
 			argsSelling,_ := strconv.ParseBool(args[2])
 			argsEfficiency,_ := strconv.Atoi(args[3])
-			argsInvetory := string(args[4])
-			argsUraniumCost,_ := strconv.Atoi(args[5])
-			argsPlayerID := args[6]
-			argsResources := args[7:len(args)]
+			argsUraniumCost,_ := strconv.Atoi(args[4])
+			argsPlayerID := args[5]
+			argsResources := args[6:len(args)]
 
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateMine(cliCtx.GetFromAddress(), string(argsName),argsPlayerID, argsPrice, argsSelling, argsEfficiency, argsInvetory, argsResources, argsUraniumCost)
+			msg := types.NewMsgCreateMine(cliCtx.GetFromAddress(),argsPlayerID, string(argsName), argsPrice, argsSelling, argsEfficiency, argsResources, argsUraniumCost)
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
