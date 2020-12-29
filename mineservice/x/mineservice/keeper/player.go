@@ -45,7 +45,7 @@ func (k Keeper) CreatePlayer(ctx sdk.Context, msg types.MsgCreatePlayer) {
 	count := k.GetPlayerCount(ctx)
     var player = types.Player{
         Creator: msg.Creator,
-        ID:      strconv.FormatInt(count, 10),
+        ID:     msg.ID,
         Name: msg.Name,
     }
 
@@ -139,7 +139,16 @@ func (k Keeper) AddMineToPlayer(ctx sdk.Context, key string,mineID string){
 	player.Mines = append(player.Mines,mine)
 	k.SetPlayer(ctx,player)
 }
-
+func (k Keeper) UpdateMineInvetoryPlayer(ctx sdk.Context, key string,mineID string){
+	player,_ := k.GetPlayer(ctx, key)
+	mine,_ :=k.GetMine(ctx,mineID)
+	for i := 0; i < len(player.Mines); i++ {
+		if player.Mines[i].ID == mineID {
+			player.Mines[i].Invetory = mine.Invetory
+		}
+	}
+	k.SetPlayer(ctx,player)
+}
 func (k Keeper) RemoveMineFromPlayer(ctx sdk.Context, key string,mineID string){
 	player,_ := k.GetPlayer(ctx, key)
 	mineIndex := k.GetMineIndexFromPlayer(ctx,key,mineID)

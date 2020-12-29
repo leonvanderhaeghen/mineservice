@@ -20,7 +20,8 @@ type createResourceRequest struct {
 	Name string `json:"name"`
 	Amount string `json:"amount"`
 	MineID string `json:"mineID"`
-	
+	PlayerID string `json:"playerID"`
+
 }
 
 func createResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
@@ -47,12 +48,14 @@ func createResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		parsedAmount,_ :=  strconv.Atoi(req.Amount)
 
 		parsedMineID := req.MineID
+		parsedPlayerID := req.PlayerID
 
 
 		msg := types.NewMsgCreateResource(
 			owner,
 			parsedName,
 			parsedMineID,
+			parsedPlayerID,
 			parsedAmount,
 			
 		)
