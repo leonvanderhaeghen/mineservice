@@ -109,6 +109,10 @@ func (k Keeper) SetMinePrice(ctx sdk.Context,key string,price sdk.Coins){
 func (k Keeper) SetMineOwner(ctx sdk.Context,key string,owner sdk.AccAddress){
 	mine,_ := k.GetMine(ctx,key)
 	mine.Owner = owner
+	for i := 0; i < len(mine.Invetory); i++ {
+		mine.Invetory[i].Owner = owner
+		k.SetResource(ctx,mine.Invetory[i])
+	}
 	k.SetMine(ctx,mine)
 }
 func(k Keeper) SetMineSelling(ctx sdk.Context,key string,selling bool){
@@ -157,6 +161,7 @@ func(k Keeper) updateMineResourceAmountByName(ctx sdk.Context,key string,resourc
 	for i := 0; i < len(resources); i++ {
 		if resources[i].Name == resourceName {
 				resources[i].Amount += resourceAmount
+				k.SetResource(ctx,resources[i])
 		}
 	}
 	k.SetMine(ctx,mine)

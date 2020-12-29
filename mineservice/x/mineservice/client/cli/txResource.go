@@ -16,18 +16,17 @@ import (
 
 func GetCmdCreateResource(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
-		Use:   "create-resource [name] [mineID] [playerID] [amount]",
+		Use:   "create-resource [name] [mineID] [amount]",
 		Short: "Creates a new resource",
-		Args:  cobra.ExactArgs(4),
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			argsName := string(args[0] )
-			argsMineID := string(args[1] )
-			argsAmount,_ := strconv.Atoi(args[3] )
-			argsPlayerID,_ := strconv.Atoi(args[2] )
+			argsMineID := string(args[1])
+			argsAmount,_ := strconv.Atoi(args[2])
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			inBuf := bufio.NewReader(cmd.InOrStdin())
 			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
-			msg := types.NewMsgCreateResource(cliCtx.GetFromAddress(), string(argsName), string(argsMineID),string(argsPlayerID), argsAmount)
+			msg := types.NewMsgCreateResource(cliCtx.GetFromAddress(), string(argsName), string(argsMineID), argsAmount)
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
