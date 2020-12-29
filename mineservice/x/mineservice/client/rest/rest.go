@@ -17,6 +17,7 @@ func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router) {
 
 		
 		r.HandleFunc("/mineservice/resource", createResourceHandler(cliCtx)).Methods("POST")
+		r.HandleFunc("/mineservice/resource/move", moveResourceHandler(cliCtx)).Methods("POST")
 		r.HandleFunc("/mineservice/resource", listResourceHandler(cliCtx, "mineservice")).Methods("GET")
 		r.HandleFunc("/mineservice/resource/{key}", getResourceHandler(cliCtx, "mineservice")).Methods("GET")
 		r.HandleFunc("/mineservice/resource", setResourceHandler(cliCtx)).Methods("PUT")

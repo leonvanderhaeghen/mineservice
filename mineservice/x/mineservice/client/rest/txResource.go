@@ -128,6 +128,45 @@ func setResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 	}
 }
 
+
+type moveResourceRequest struct {
+	BaseReq rest.BaseReq `json:"base_req"`
+	Creator string `json:"creator"`
+	ID 		string `json:"id"`
+  	Amount      int `json:"amount"`
+  	PlayerID string `json:"playerid""`
+}
+
+func moveResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req moveResourceRequest
+		if !rest.ReadRESTReq(w, r, cliCtx.Codec, &req) {
+			rest.WriteErrorResponse(w, http.StatusBadRequest, "failed to parse request")
+			return
+		}
+		baseReq := req.BaseReq.Sanitize()
+		if !baseReq.ValidateBasic(w) {
+			return
+		}
+		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		if err != nil {
+			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
+			return
+		}
+		msg := types.NewMsgMoveResource(req.ID,req.PlayerID,req.Amount, creator)
+
+		err = msg.ValidateBasic()
+		if err != nil {
+			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
+			return
+		}
+
+		utils.WriteGenerateStdTxResponse(w, cliCtx, baseReq, []sdk.Msg{msg})
+	}
+}
+
+
+
 type deleteResourceRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	Creator string `json:"creator"`
