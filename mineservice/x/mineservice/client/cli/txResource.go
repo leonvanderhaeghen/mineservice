@@ -84,3 +84,27 @@ func GetCmdDeleteResource(cdc *codec.Codec) *cobra.Command {
 		},
 	}
 }
+
+func GetCmdMoveResource(cdc *codec.Codec) *cobra.Command {
+	return &cobra.Command{
+		Use:   "move-resource [id] [playerid] [amount]",
+		Short: "Move a resource by ID from mine to player inv",
+		Args:  cobra.ExactArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+
+			cliCtx := context.NewCLIContext().WithCodec(cdc)
+			inBuf := bufio.NewReader(cmd.InOrStdin())
+			txBldr := auth.NewTxBuilderFromCLI(inBuf).WithTxEncoder(utils.GetTxEncoder(cdc))
+			id := args[0]
+			argsPlayerID := string(args[1])
+			argsAmount,_ := strconv.Atoi(args[2])
+
+			msg := types.NewMsgMoveResource(id,argsPlayerID,argsAmount, cliCtx.GetFromAddress())
+			err := msg.ValidateBasic()
+			if err != nil {
+				return err
+			}
+			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
+		},
+	}
+}

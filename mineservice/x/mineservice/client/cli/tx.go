@@ -34,6 +34,7 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 		GetCmdBuyMine(cdc),
 		GetCmdSetMine(cdc),
 		GetCmdDeleteMine(cdc),
+		GetCmdMoveResource(cdc),
 	)...)
 
 	return mineserviceTxCmd

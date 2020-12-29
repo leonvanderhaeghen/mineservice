@@ -26,7 +26,6 @@ func handleMsgMoveResource(ctx sdk.Context, k keeper.Keeper, msg types.MsgMoveRe
 	}
 
 	k.MoveResourceFromMine(ctx,msg.ID,resource,msg.PlayerID)
-	k.DeleteResource(ctx, msg.ID)
 	
 	return &sdk.Result{}, nil
 }
