@@ -9,5 +9,5 @@ type Player struct {
 	ID      string         `json:"id" yaml:"id"`
     Name string `json:"name" yaml:"name"`
     Invetory []Resource `json:"invetory" yaml:"invetory"`
-    Mines []Mine `json:"mines" yaml:"mines"`
+    Mines []string `json:"mines" yaml:"mines"`
 }

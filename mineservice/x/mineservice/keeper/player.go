@@ -135,11 +135,10 @@ func (k Keeper) PlayerExists(ctx sdk.Context, key string) bool {
 
 func (k Keeper) AddMineToPlayer(ctx sdk.Context, key string,mineID string){
 	player,_ := k.GetPlayer(ctx, key)
-	mine,_ :=k.GetMine(ctx,mineID)
-	player.Mines = append(player.Mines,mine)
+	player.Mines = append(player.Mines,mineID)
 	k.SetPlayer(ctx,player)
 }
-func (k Keeper) UpdateMineInvetoryPlayer(ctx sdk.Context, key string,mineID string){
+/*func (k Keeper) UpdateMineInvetoryPlayer(ctx sdk.Context, key string,mineID string){
 	player,_ := k.GetPlayer(ctx, key)
 	mine,_ :=k.GetMine(ctx,mineID)
 	for i := 0; i < len(player.Mines); i++ {
@@ -148,7 +147,7 @@ func (k Keeper) UpdateMineInvetoryPlayer(ctx sdk.Context, key string,mineID stri
 		}
 	}
 	k.SetPlayer(ctx,player)
-}
+}*/
 func (k Keeper) RemoveMineFromPlayer(ctx sdk.Context, key string,mineID string){
 	player,_ := k.GetPlayer(ctx, key)
 	mineIndex := k.GetMineIndexFromPlayer(ctx,key,mineID)
@@ -199,12 +198,12 @@ func (k Keeper) GetMineIndexFromPlayer(ctx sdk.Context, key string,mineID string
 	player,_ := k.GetPlayer(ctx, key)
 	mine,_ :=k.GetMine(ctx,mineID)
 	for i := 0; i < len(player.Mines); i++ {
-		if player.Mines[i].ID == mine.ID {
+		if player.Mines[i] == mine.ID {
 			return i
 		}
 	}
 	return -1
 } 
-func removeMine(slice []types.Mine, s int) []types.Mine {
+func removeMine(slice []string, s int) []string {
     return append(slice[:s], slice[s+1:]...)
 }

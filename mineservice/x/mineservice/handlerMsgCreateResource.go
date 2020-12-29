@@ -19,7 +19,6 @@ func handleMsgCreateResource(ctx sdk.Context, k keeper.Keeper, msg types.MsgCrea
 		
 	k.CreateResource(ctx, resource)
 	k.AddResourceMine(ctx,resource)
-	k.UpdateMineInvetoryPlayer(ctx,msg.PlayerID,msg.MineID)
 
 	return &sdk.Result{Events: ctx.EventManager().Events()}, nil
 }
