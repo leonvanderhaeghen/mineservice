@@ -12,7 +12,7 @@ func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router) {
 		r.HandleFunc("/mineservice/player", createPlayerHandler(cliCtx)).Methods("POST")
 		r.HandleFunc("/mineservice/player", listPlayerHandler(cliCtx, "mineservice")).Methods("GET")
 		r.HandleFunc("/mineservice/player/{key}", getPlayerHandler(cliCtx, "mineservice")).Methods("GET")
-		r.HandleFunc("/mineservice/player", setPlayerHandler(cliCtx)).Methods("PUT")
+		//r.HandleFunc("/mineservice/player", setPlayerHandler(cliCtx)).Methods("PUT")
 		r.HandleFunc("/mineservice/player", deletePlayerHandler(cliCtx)).Methods("DELETE")
 
 		
@@ -20,7 +20,7 @@ func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router) {
 		r.HandleFunc("/mineservice/resource/move", moveResourceHandler(cliCtx)).Methods("POST")
 		r.HandleFunc("/mineservice/resource", listResourceHandler(cliCtx, "mineservice")).Methods("GET")
 		r.HandleFunc("/mineservice/resource/{key}", getResourceHandler(cliCtx, "mineservice")).Methods("GET")
-		r.HandleFunc("/mineservice/resource", setResourceHandler(cliCtx)).Methods("PUT")
+		//r.HandleFunc("/mineservice/resource", setResourceHandler(cliCtx)).Methods("PUT")
 		r.HandleFunc("/mineservice/resource", deleteResourceHandler(cliCtx)).Methods("DELETE")
 
 		
@@ -29,7 +29,7 @@ func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router) {
 		r.HandleFunc("/mineservice/mine/buy", buyMineHandler(cliCtx)).Methods("POST")
 		r.HandleFunc("/mineservice/mine", listMineHandler(cliCtx, "mineservice")).Methods("GET")
 		r.HandleFunc("/mineservice/mine/{key}", getMineHandler(cliCtx, "mineservice")).Methods("GET")
-		r.HandleFunc("/mineservice/mine", setMineHandler(cliCtx)).Methods("PUT")
+		//r.HandleFunc("/mineservice/mine", setMineHandler(cliCtx)).Methods("PUT")
 		r.HandleFunc("/mineservice/mine", deleteMineHandler(cliCtx)).Methods("DELETE")
 
 		
