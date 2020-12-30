@@ -16,7 +16,6 @@ var _ = strconv.Itoa(42)
 
 type createPlayerRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
 	Name string `json:"name"`
 	
 }
@@ -32,7 +31,7 @@ func createPlayerHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		creator, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -62,7 +61,6 @@ func createPlayerHandler(cliCtx context.CLIContext) http.HandlerFunc {
 type setPlayerRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	ID 		string `json:"id"`
-	Creator string `json:"creator"`
 	Name string `json:"name"`
 	Invetory string `json:"invetory"`
 	Mines string `json:"mines"`
@@ -80,7 +78,7 @@ func setPlayerHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		creator, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -109,7 +107,7 @@ func setPlayerHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deletePlayerRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
+	
 	ID 		string `json:"id"`
 }
 
@@ -124,7 +122,7 @@ func deletePlayerHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		creator, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return

@@ -17,7 +17,6 @@ var _ = strconv.Itoa(42)
 
 type createMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Owner string `json:"owner"`
 	PlayerID string `json:"owner"`
 	Name string `json:"name"`
 	Price string `json:"price"`
@@ -39,7 +38,7 @@ func createMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		owner, err := sdk.AccAddressFromBech32(req.Owner)
+		owner, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -86,7 +85,6 @@ type setMineRequest struct {
 	ID 		string `json:"id"`
 	Name string `json:"name"`
 	Price string `json:"price"`
-	Owner string `json:"owner"`
 	Selling string `json:"selling"`
 	Efficiency string `json:"efficiency"`
 	Invetory string `json:"invetory"`
@@ -106,7 +104,7 @@ func setMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		owner, err := sdk.AccAddressFromBech32(req.Owner)
+		owner, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -153,7 +151,6 @@ func setMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Owner string `json:"owner"`
 	ID 		string `json:"id"`
 }
 
@@ -168,7 +165,7 @@ func deleteMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		owner, err := sdk.AccAddressFromBech32(req.Owner)
+		owner, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -188,7 +185,6 @@ func deleteMineHandler(cliCtx context.CLIContext) http.HandlerFunc {
 type sellMineRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	ID 		string `json:"id"`
-	Owner string `json:"owner"`
 	Price string `json:"price"`
 }
 
@@ -203,7 +199,7 @@ return func(w http.ResponseWriter, r *http.Request) {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		owner, err := sdk.AccAddressFromBech32(req.Owner)
+		owner, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -227,7 +223,6 @@ type buyMineRequest struct {
 	ID 		string `json:"id"`
 	BuyerID 		string `json:"buyerid"`
 	SellerID 		string `json:"sellerid"`
-	Owner string `json:"owner"`
 	Price string `json:"price"`
 }
 
@@ -242,7 +237,7 @@ return func(w http.ResponseWriter, r *http.Request) {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		owner, err := sdk.AccAddressFromBech32(req.Owner)
+		owner, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return

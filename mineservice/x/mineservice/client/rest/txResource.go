@@ -16,7 +16,6 @@ var _ = strconv.Itoa(42)
 
 type createResourceRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Owner string `json:"owner"`
 	Name string `json:"name"`
 	Amount string `json:"amount"`
 	MineID string `json:"mineID"`
@@ -34,7 +33,7 @@ func createResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		owner, err := sdk.AccAddressFromBech32(req.Owner)
+		owner, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -70,7 +69,6 @@ func createResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 type setResourceRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	ID 		string `json:"id"`
-	Creator string `json:"creator"`
 	Name string `json:"name"`
 	Amount string `json:"amount"`
 	Price string `json:"price"`
@@ -90,7 +88,7 @@ func setResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		creator, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -131,7 +129,6 @@ func setResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type moveResourceRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
 	ID 		string `json:"id"`
   	Amount      int `json:"amount"`
   	PlayerID string `json:"playerid""`
@@ -148,7 +145,7 @@ func moveResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		creator, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
@@ -169,7 +166,6 @@ func moveResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 
 type deleteResourceRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
-	Creator string `json:"creator"`
 	ID 		string `json:"id"`
 }
 
@@ -184,7 +180,7 @@ func deleteResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
 		if !baseReq.ValidateBasic(w) {
 			return
 		}
-		creator, err := sdk.AccAddressFromBech32(req.Creator)
+		creator, err := sdk.AccAddressFromBech32(baseReq.From)
 		if err != nil {
 			rest.WriteErrorResponse(w, http.StatusBadRequest, err.Error())
 			return
