@@ -207,3 +207,9 @@ func (k Keeper) GetMineIndexFromPlayer(ctx sdk.Context, key string,mineID string
 func removeMine(slice []string, s int) []string {
     return append(slice[:s], slice[s+1:]...)
 }
+
+// Get an iterator over all players 
+func (k Keeper) GetPlayersIterator(ctx sdk.Context) sdk.Iterator {
+	store := ctx.KVStore(k.storeKey)
+	return sdk.KVStorePrefixIterator(store, []byte(types.PlayerPrefix))
+}
