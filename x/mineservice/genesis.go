@@ -27,5 +27,33 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, data types.GenesisState) {
 // with InitGenesis
 func ExportGenesis(ctx sdk.Context, k keeper.Keeper) (data types.GenesisState) {
 	// TODO: Define logic for exporting state
-	return types.NewGenesisState()
+	var mineRecords []types.Mine
+	var resourceRecords []types.Resource
+	var playerRecords []types.Player
+
+	mineIterator := k.GetMinesIterator(ctx)
+	for ; mineIterator.Valid(); mineIterator.Next() {
+
+		key := string(mineIterator.Key())
+		mine, _ := k.GetMine(ctx, key)
+		mineRecords = append(mineRecords, mine)
+
+	}
+	resourceIterator := k.GetResourcesIterator(ctx)
+	for ; resourceIterator.Valid(); resourceIterator.Next() {
+
+		key := string(resourceIterator.Key())
+		resource, _ := k.GetResource(ctx, key)
+		resourceRecords = append(resourceRecords, resource)
+
+	}
+	playerIterator := k.GetPlayersIterator(ctx)
+	for ; playerIterator.Valid(); playerIterator.Next() {
+
+		key := string(playerIterator.Key())
+		player, _ := k.GetPlayer(ctx, key)
+		playerRecords = append(playerRecords, player)
+
+	}
+	return types.GenesisState{MineRecords: mineRecords,PlayerRecords: playerRecords,ResourceRecords: resourceRecords}
 }

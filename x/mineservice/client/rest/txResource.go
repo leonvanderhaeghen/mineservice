@@ -131,7 +131,7 @@ type moveResourceRequest struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	ID 		string `json:"id"`
   	Amount      int `json:"amount"`
-  	PlayerID string `json:"playerid""`
+  	PlayerID string `json:"playerid"`
 }
 
 func moveResourceHandler(cliCtx context.CLIContext) http.HandlerFunc {
