@@ -41,27 +41,81 @@ A list of user accounts created during genesis of your application.
 ## Routes api
 
 ### `GET`
+    - /mineservice/player
+    - /mineservice/player/{key}
+    - /mineservice/resource
+    - /mineservice/resource/{key}
     - /mineservice/mine
     - /mineservice/mine/{key}
-### `POST`
-    - mineservice/mine
-    - /mineservice/mine/sell
-    - /mineservice/mine/buy
-### `PUT`
-    - /mineservice/mine
-### `DELETE`
-    - /mineservice/mine
+### `CREAT PLAYER` (post)
+    - mineservice/player
+    {
+         "base_req" : "sign with js library"
+         "name": " "
+    }
+###  `CREAT RESOURCE` (post)
+    - mineservice/resource
+     {
+         "base_req" : "sign with js library"
+         "name": " "
+         "amount":" "
+         "mineID":" "
+    }
+### `MOVE RESOURCE` (post)
+      - mineservice/resource/move
+        {
+            "base_req" : "sign with js library"
+            "id" : " "
+            "amount" : " "
+            "playerid" : " "
+         }
+### `CREAT MINE` (post)
+             - mineservice/mine
+            {
+                "base_req" : "sign with js library"
+              	"owner" : " "
+              	"name" : " "
+              	"price" : "200token"
+              	"selling" : "true"
+              	"efficiency" : " "
+              	"resources" : ["bronze"}
+              	"uraniumCost" : " "
+            }
+### `SELL MINE` (post)
+            - mineservice/mine/sell
+            {
+                "base_req" : "sign with js library"
+                "id" : " "
+                "price" : "300token"
+            }
+### `BUY MINE` (post)
+        - mineservice/mine/buy
+            {
+                "base_req" : "sign with js library"
+                "buyerid": " "
+                "sellerid": " "
 
-## Routes cli
- ### `transaction commands`
-    - create-mine [name] [price] [selling] [efficiency] [invetory] [uraniumCost] [resources]
-    - sell-mine [id] [price]
-    - set-mine [id]  [name] [price] [selling] [efficiency] [invetory] [uraniumCost] [resources]
-    - delete-mine [id]
-    - buy-mine [id] [price]
- ### `query commands`
-    - list-mine
-    - get-mine [key]
+                "price": "300token"
+
+            }
+### `DELETE MINE` (delete)
+            - mineservice/mine
+            {
+                "base_req" : "sign with js library"
+                "id" : " "
+            }
+### `DELETE RESOURCE`(delete)
+            - mineservice/resource
+            {
+                "base_req" : "sign with js library"
+                "id" : " "
+            }
+### `DELETE PLAYER`(delete)
+             - mineservice/player
+             {
+                 "base_req" : "sign with js library"
+                 "id" : " "
+             }                      
 ## Learn more
 
 - [Starport](https://github.com/tendermint/starport)
