@@ -177,3 +177,9 @@ func(k Keeper) checkResourceAmount(ctx sdk.Context,key string,resourceName strin
 	}
 	return false
 } 
+
+// Get an iterator over all mines 
+func (k Keeper) GetMinesIterator(ctx sdk.Context) sdk.Iterator {
+	store := ctx.KVStore(k.storeKey)
+	return sdk.KVStorePrefixIterator(store, []byte(types.MinePrefix))
+}

@@ -131,3 +131,9 @@ func (k Keeper) ResourceExistsMine(ctx sdk.Context, key string) bool {
 	store := ctx.KVStore(k.storeKey)
 	return store.Has([]byte(types.ResourcePrefix + key))
 }
+
+// Get an iterator over all resource 
+func (k Keeper) GetResourcesIterator(ctx sdk.Context) sdk.Iterator {
+	store := ctx.KVStore(k.storeKey)
+	return sdk.KVStorePrefixIterator(store, []byte(types.ResourcePrefix))
+}
